@@ -1,0 +1,490 @@
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-3 mb-3 mb-md-0">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                    <select class="form-select">
+                        <option selected>Abril 2025</option>
+                        <option>Março 2025</option>
+                        <option>Fevereiro 2025</option>
+                        <option>Janeiro 2025</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3 mb-md-0">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                    <select class="form-select">
+                        <option selected>Todas as Categorias</option>
+                        <option>Alimentação</option>
+                        <option>Moradia</option>
+                        <option>Transporte</option>
+                        <option>Lazer</option>
+                        <option>Saúde</option>
+                        <option>Educação</option>
+                        <option>Salário</option>
+                        <option>Investimentos</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3 mb-md-0">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-filter"></i></span>
+                    <select class="form-select">
+                        <option selected>Todos os Tipos</option>
+                        <option>Receitas</option>
+                        <option>Despesas</option>
+                        <option>Fixos</option>
+                        <option>Variáveis</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 text-md-end">
+                <button class="btn btn-new w-100" data-bs-toggle="modal" data-bs-target="#newTransactionModal">
+                    <i class="fas fa-plus me-2"></i>Nova Transação
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <ul class="nav nav-tabs" id="transactionTabs">
+            <li class="nav-item">
+                <a class="nav-link active px-4 py-3" data-bs-toggle="tab" href="#allTransactions">Todas Transações</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link px-4 py-3" data-bs-toggle="tab" href="#income">Receitas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link px-4 py-3" data-bs-toggle="tab" href="#expenses">Despesas</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="allTransactions">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Data</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10/04/2025</td>
+                                <td>Salário Mensal</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #27ae60;">
+                                            <i class="fas fa-briefcase"></i>
+                                        </span>
+                                        Salário
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-receita">Receita</span>
+                                    <span class="badge badge-fixo">Fixo</span>
+                                </td>
+                                <td class="text-success fw-bold">R$ 7.500,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>05/04/2025</td>
+                                <td>Aluguel Apartamento</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #8e44ad;">
+                                            <i class="fas fa-home"></i>
+                                        </span>
+                                        Moradia
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-fixo">Fixo</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 1.200,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>12/04/2025</td>
+                                <td>Dividendos Ações</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #2980b9;">
+                                            <i class="fas fa-chart-line"></i>
+                                        </span>
+                                        Investimentos
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-receita">Receita</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-success fw-bold">R$ 740,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>08/04/2025</td>
+                                <td>Mercado Semanal</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #e67e22;">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </span>
+                                        Alimentação
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 320,50</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>15/04/2025</td>
+                                <td>Academia Mensal</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #e74c3c;">
+                                            <i class="fas fa-dumbbell"></i>
+                                        </span>
+                                        Saúde
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-fixo">Fixo</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 120,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>03/04/2025</td>
+                                <td>Conta de Energia</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #8e44ad;">
+                                            <i class="fas fa-bolt"></i>
+                                        </span>
+                                        Moradia
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 187,32</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>18/04/2025</td>
+                                <td>Jantar Restaurante</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #f39c12;">
+                                            <i class="fas fa-utensils"></i>
+                                        </span>
+                                        Lazer
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 156,80</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>20/04/2025</td>
+                                <td>Trabalho Freelancer</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #16a085;">
+                                            <i class="fas fa-laptop"></i>
+                                        </span>
+                                        Salário
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-receita">Receita</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-success fw-bold">R$ 1.200,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="income">
+                <!-- Receitas seriam mostradas aqui -->
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Data</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10/04/2025</td>
+                                <td>Salário Mensal</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #27ae60;">
+                                            <i class="fas fa-briefcase"></i>
+                                        </span>
+                                        Salário
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-receita">Receita</span>
+                                    <span class="badge badge-fixo">Fixo</span>
+                                </td>
+                                <td class="text-success fw-bold">R$ 7.500,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>12/04/2025</td>
+                                <td>Dividendos Ações</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #2980b9;">
+                                            <i class="fas fa-chart-line"></i>
+                                        </span>
+                                        Investimentos
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-receita">Receita</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-success fw-bold">R$ 740,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>20/04/2025</td>
+                                <td>Trabalho Freelancer</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #16a085;">
+                                            <i class="fas fa-laptop"></i>
+                                        </span>
+                                        Salário
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-receita">Receita</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-success fw-bold">R$ 1.200,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="expenses">
+                <!-- Despesas seriam mostradas aqui -->
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Data</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>05/04/2025</td>
+                                <td>Aluguel Apartamento</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #8e44ad;">
+                                            <i class="fas fa-home"></i>
+                                        </span>
+                                        Moradia
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-fixo">Fixo</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 1.200,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>08/04/2025</td>
+                                <td>Mercado Semanal</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #e67e22;">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </span>
+                                        Alimentação
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 320,50</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>15/04/2025</td>
+                                <td>Academia Mensal</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #e74c3c;">
+                                            <i class="fas fa-dumbbell"></i>
+                                        </span>
+                                        Saúde
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-fixo">Fixo</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 120,00</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>03/04/2025</td>
+                                <td>Conta de Energia</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #8e44ad;">
+                                            <i class="fas fa-bolt"></i>
+                                        </span>
+                                        Moradia
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 187,32</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>18/04/2025</td>
+                                <td>Jantar Restaurante</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="category-icon" style="background-color: #f39c12;">
+                                            <i class="fas fa-utensils"></i>
+                                        </span>
+                                        Lazer
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-despesa">Despesa</span>
+                                    <span class="badge badge-variavel">Variável</span>
+                                </td>
+                                <td class="text-danger fw-bold">R$ 156,80</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-white py-3">
+            <div class="row">
+                <div class="col-6">
+                    <small class="text-muted">Mostrando 8 de 8 transações</small>
+                </div>
+                <div class="col-6 text-end">
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0 justify-content-end">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+.input-group-text {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+
+.nav-link {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.nav-link.active {
+    color: var(--secondary-color) !important;
+    font-weight: 700;
+    background-color: transparent !important;
+    border-bottom: 3px solid var(--secondary-color) !important;
+}
+
+.badge-receita {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.badge {
+    margin: 3px;
+}
+
+.badge-despesa {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.badge-fixo {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.badge-variavel {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-new {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+
+.btn-new:hover {
+    background-color: #27ae60;
+    border-color: #27ae60;
+    color: white;
+}
+
+.table {
+    vertical-align: middle;
+}
+
+.table tr {
+    transition: background-color 0.2s ease;
+}
+
+.table tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.category-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    margin-right: 5px;
+}

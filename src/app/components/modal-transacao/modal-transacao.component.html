@@ -1,0 +1,93 @@
+<div class="modal fade" id="newTransactionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Nova Transação</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de Transação</label>
+                        <div class="d-flex">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="transactionType" id="receita" value="receita" checked>
+                                <label class="form-check-label" for="receita">
+                                    <i class="fas fa-arrow-up text-success me-1"></i>Receita
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="transactionType" id="despesa" value="despesa">
+                                <label class="form-check-label" for="despesa">
+                                    <i class="fas fa-arrow-down text-danger me-1"></i>Despesa
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="description" placeholder="Ex: Salário, Aluguel, etc">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="amount" class="form-label">Valor (R$)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R$</span>
+                                <input type="text" class="form-control" id="amount" placeholder="0,00">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="date" class="form-label">Data</label>
+                            <input type="date" class="form-control" id="date" value="2025-04-13">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="category" class="form-label">Categoria</label>
+                            <select class="form-select" id="category">
+                                <option selected disabled>Selecione uma categoria</option>
+                                <optgroup label="Receitas">
+                                    <option>Salário</option>
+                                    <option>Investimentos</option>
+                                    <option>Presente</option>
+                                    <option>Outros (Receita)</option>
+                                </optgroup>
+                                <optgroup label="Despesas">
+                                    <option>Alimentação</option>
+                                    <option>Moradia</option>
+                                    <option>Transporte</option>
+                                    <option>Saúde</option>
+                                    <option>Lazer</option>
+                                    <option>Educação</option>
+                                    <option>Vestuário</option>
+                                    <option>Outros (Despesa)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="frequency" class="form-label">Tipo</label>
+                            <div class="d-flex">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="frequency" id="fixo" value="fixo" checked>
+                                    <label class="form-check-label" for="fixo">Fixo</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="frequency" id="variavel" value="variavel">
+                                    <label class="form-check-label" for="variavel">Variável</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Observações (opcional)</label>
+                        <textarea class="form-control" id="notes" rows="2" placeholder="Adicione informações adicionais aqui..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Salvar Transação</button>
+            </div>
+        </div>
+    </div>
+</div>
