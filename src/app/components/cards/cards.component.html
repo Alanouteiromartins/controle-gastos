@@ -4,7 +4,7 @@
             <div class="card-body text-center">
                 <i class="fas fa-money-bill-wave summary-icon"></i>
                 <h6 class="card-subtitle mb-2 text-light">Saldo Atual</h6>
-                <h3 class="card-title mb-0">R$ 5.874,32</h3>
+                <h3 class="card-title mb-0">{{saldoAtual | currency: 'BRL'}}</h3>
             </div>
         </div>
     </div>
@@ -13,7 +13,7 @@
             <div class="card-body text-center">
                 <i class="fas fa-arrow-up summary-icon text-success"></i>
                 <h6 class="card-subtitle mb-2 text-light">Receitas do Mês</h6>
-                <h3 class="card-title mb-0">R$ 8.240,00</h3>
+                <h3 class="card-title mb-0">{{valorReceitaMes | currency:'BRL'}}</h3>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
             <div class="card-body text-center">
                 <i class="fas fa-arrow-down summary-icon text-danger"></i>
                 <h6 class="card-subtitle mb-2 text-light">Despesas do Mês</h6>
-                <h3 class="card-title mb-0">R$ 2.365,68</h3>
+                <h3 class="card-title mb-0">{{valorDespesaMes | currency:'BRL' }}</h3>
             </div>
         </div>
     </div>
