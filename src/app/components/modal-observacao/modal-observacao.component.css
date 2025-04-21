@@ -1,0 +1,11 @@
+.modal-content {
+    border-radius: 15px;
+    border: none;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+    color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}

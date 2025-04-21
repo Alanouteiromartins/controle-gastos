@@ -1,8 +1,9 @@
 export interface Transacao {
-    id?: string;
+    _id?: string;
     data: Date;
     descricao: string;
     categoria: string;
     tipo: string[];
     valor: number;
+    observacao?: string;
 }

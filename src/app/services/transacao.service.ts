@@ -1,760 +1,116 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Transacao } from '../interfaces/transacao';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map, tap } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransacaoService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  transacoes: Transacao[] = [{
-    data: new Date(),
-    descricao: 'Tenis',
-    categoria: 'Lazer',
-    tipo: ['Despesa', 'Variável'],
-    valor: 350
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 2500
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Aluguel',
-    categoria: 'Moradia',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  },
-  {
-    data: new Date(),
-    descricao: 'Mesa para o escritório',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Variável'],
-    valor: 7000
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(),
-    descricao: 'Luz',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 371.90
-  },
-  {
-    data: new Date(),
-    descricao: 'Agua',
-    categoria: 'Moradia',
-    tipo: ['Despesa', 'Fixo'],
-    valor: 101.00
-  },
-  {
-    data: new Date(2025, 3, 15),
-    descricao: 'Salário Mensal Tiffani',
-    categoria: 'Salário',
-    tipo: ['Receita', 'Fixo'],
-    valor: 3000
-  }]
-
-  getTransacoes(): Transacao[] {
-    return this.transacoes;
+  transacaoAdicionada = signal(0);
+  
+  getTransacoes(): Observable<Transacao[]> {
+    return this.http.get<Transacao[]>(`${environment.apiUrl}`);
   }
 
-  getTransacoesMes(mes: number) {
-    const transacoesMes = this.transacoes.filter((transacao) => transacao.data.getMonth() + 1 === mes);
-    return transacoesMes;
+  getTransacoesMes(mes: number): Observable<Transacao[]> {
+    return this.http.get<Transacao[]>(`${environment.apiUrl}`).pipe(
+      map((transacoes) => {
+        // Filtra as transações para o mês desejado
+        return transacoes.filter((transacao) => {
+          const dataTransacao = new Date(transacao.data); // Converte a data da transação
+          return dataTransacao.getMonth() + 1 === mes; // Compara com o mês passado (mes - 1 no JS, então +1)
+        });
+      })
+    );
   }
 
-  getReceitasMes(mes: number) {
-    const transacoesMes = this.getTransacoesMes(mes);
-    const receitasMes = transacoesMes.filter((transacao) => transacao.tipo.includes('Receita'));
-    return receitasMes;
+  getReceitasMes(mes: number): Observable<Transacao[]> {
+    return this.http.get<Transacao[]>(`${environment.apiUrl}`).pipe(
+      map((transacoes) => {
+        return transacoes.filter((transacao) => {
+          const dataTransacao = new Date(transacao.data);
+          const ehDoMes = dataTransacao.getMonth() + 1 === mes;
+          const ehReceita = transacao.tipo.includes('Receita');
+          return ehDoMes && ehReceita;
+        });
+      })
+    );
+  }
+  
+
+  getDespesasMes(mes: number): Observable<Transacao[]> {
+    return this.http.get<Transacao[]>(`${environment.apiUrl}`).pipe(
+      map((transacoes) => {
+        return transacoes.filter((transacao) => {
+          const dataTransacao = new Date(transacao.data);
+          const ehDoMes = dataTransacao.getMonth() +1 === mes;
+          const ehDespesa = transacao.tipo.includes('Despesa');
+          return ehDoMes && ehDespesa;
+        })
+      })
+    )
   }
 
-  getDespesasMes(mes: number) {
-    const transacoesMes = this.getTransacoesMes(mes);
-    const despesasMes = transacoesMes.filter((transacao) => transacao.tipo.includes('Despesa'));
-    return despesasMes;
+  getTransacoesFiltradas(categoria: string, mes: number, tipo: string){
+    return this.http.get<Transacao[]>(`${environment.apiUrl}`).pipe(
+      map((transacoes) =>{
+        return transacoes.filter((transacao) =>{
+          const dataTransacao = new Date(transacao.data);
+          const ehDoMes = dataTransacao.getMonth() + 1 === mes;
+          const porCategorias = categoria === '' || transacao.categoria.includes(categoria);
+          const porTipo =  tipo === '' || transacao.tipo.includes(tipo);
+          return ehDoMes && porTipo && porCategorias;
+        })
+      })
+    )
+  }
+
+  getReceitasFiltradas(categoria: string, mes: number, tipo: string){
+    return this.http.get<Transacao[]>(`${environment.apiUrl}`).pipe(
+      map((transacoes) =>{
+        return transacoes.filter((transacao) =>{
+          const dataTransacao = new Date(transacao.data);
+          const ehDoMes = dataTransacao.getMonth() + 1 === mes;
+          const porCategorias = categoria === '' || transacao.categoria.includes(categoria);
+          const porTipo =  tipo === '' || transacao.tipo.includes(tipo);
+          const ehReceita = transacao.tipo.includes('Receita');
+          return ehDoMes && porTipo && porCategorias && ehReceita;
+        })
+      })
+    )
+  }
+
+  getDespesasFiltradas(categoria: string, mes: number, tipo: string){
+    return this.http.get<Transacao[]>(`${environment.apiUrl}`).pipe(
+      map((transacoes) =>{
+        return transacoes.filter((transacao) =>{
+          const dataTransacao = new Date(transacao.data);
+          const ehDoMes = dataTransacao.getMonth() + 1 === mes;
+          const porCategorias = categoria === '' || transacao.categoria.includes(categoria);
+          const porTipo =  tipo === '' || transacao.tipo.includes(tipo);
+          const ehReceita = transacao.tipo.includes('Despesa');
+          return ehDoMes && porTipo && porCategorias && ehReceita;
+        })
+      })
+    )
+  }
+
+  addTransacao(transacao: Transacao): Observable<Transacao>{
+    return this.http.post<Transacao>(`${environment.apiUrl}`, transacao).pipe(
+      tap(() => this.transacaoAdicionada.update(valor => valor +1))
+    );
+  }
+
+  deleteTransacao(id: string){
+    return this.http.delete(`${environment.apiUrl}/${id}`).pipe(
+      tap(()=>{
+        this.transacaoAdicionada.update(valor => valor + 1);
+      })
+    )
   }
 }

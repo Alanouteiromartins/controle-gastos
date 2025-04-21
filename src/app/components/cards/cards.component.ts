@@ -3,6 +3,7 @@ import { TransacaoService } from '../../services/transacao.service';
 import { Transacao } from '../../interfaces/transacao';
 import { CommonModule } from '@angular/common';
 import { MesService } from '../../services/mes.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-cards',
@@ -14,7 +15,7 @@ export class CardsComponent implements OnInit {
 
   valorReceitaMes: number = 0;
   valorDespesaMes: number = 0;
-  mesAtual = new Date().getMonth() + 1;
+  mesAtual = 0;
   saldoAtual: number = 0;
 
   constructor(private transacaoService: TransacaoService, private mesService: MesService) { }
@@ -22,28 +23,34 @@ export class CardsComponent implements OnInit {
   ngOnInit(): void {
     this.mesService.mesAtual$.subscribe((mes) => {
       this.mesAtual = mes;
-      this.getValorReceitaMes();
-      this.getDespesasMes();
-      this.getSaldoAtual();
+      this.carregarDadosDoMes();
     })
 
   }
 
+  carregarDadosDoMes() {
+    forkJoin({
+      receitas: this.transacaoService.getReceitasMes(this.mesAtual),
+      despesas: this.transacaoService.getDespesasMes(this.mesAtual)
+    }).subscribe(({ receitas, despesas }) => {
+      this.valorReceitaMes = receitas.reduce((total, t) => total + t.valor, 0);
+      this.valorDespesaMes = despesas.reduce((total, t) => total + t.valor, 0);
+      this.getSaldoAtual();
+    });
+  }
+
   getValorReceitaMes() {
-    const transacoesMes = this.transacaoService.getTransacoesMes(this.mesAtual);
-    // const transacoesMes = this.transacoes.filter((transacao) => transacao.data.getMonth() + 1 === this.mesAtual);
-
-    const receitaTransacoes = transacoesMes.filter((transacao) => transacao.tipo.includes('Receita'));
-
-    this.valorReceitaMes = receitaTransacoes.reduce((total, transacao) => total + transacao.valor, 0);
+    this.transacaoService.getReceitasMes(this.mesAtual).subscribe((transacoesMes) =>{
+      const receitaTransacoes = transacoesMes;
+      this.valorReceitaMes = receitaTransacoes.reduce((total, transacao) => total + transacao.valor, 0);
+    })
   }
 
   getDespesasMes() {
-    const transacoesMes = this.transacaoService.getTransacoesMes(this.mesAtual);
-
-    const despesaTransacoes = transacoesMes.filter((transacao) => transacao.tipo.includes('Despesa'));
-
-    this.valorDespesaMes = despesaTransacoes.reduce((total, transacao) => total + transacao.valor, 0);
+    this.transacaoService.getDespesasMes(this.mesAtual).subscribe((transacoes) =>{
+      const despesaTransacoes = transacoes;
+      this.valorDespesaMes = despesaTransacoes.reduce((total, transacao) => total + transacao.valor, 0);
+    })
   }
 
   getSaldoAtual() {

@@ -1,35 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { Transacao } from '../../interfaces/transacao';
 import { CommonModule } from '@angular/common';
 import { TransacaoService } from '../../services/transacao.service';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MesService } from '../../services/mes.service';
+import { AlertService } from '../../services/alerta.service';
+import { CategoriaService } from '../../services/categoria.service';
+import { ModalObservacaoComponent } from "../modal-observacao/modal-observacao.component";
 
 @Component({
   selector: 'app-transacao',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ModalObservacaoComponent],
   templateUrl: './transacao.component.html',
   styleUrl: './transacao.component.css'
 })
 export class TransacaoComponent implements OnInit {
 
-  categoriaIcones: { [key: string]: { icon: string; cor: string } } = {
-    'Lazer': { icon: 'fas fa-gamepad', cor: '#e67e22' },
-    'Salário': { icon: 'fas fa-briefcase', cor: '#27ae60' },
-    'Alimentação': { icon: 'fas fa-utensils', cor: '#c0392b' },
-    'Transporte': { icon: 'fas fa-car', cor: '#2980b9' },
-    'Moradia': { icon: 'fas fa-house', cor: '#2980b9' },
-    'Educação': { icon: 'fas fa-book', cor: '#8e44ad' },
-    'Saúde': { icon: 'fas fa-heartbeat', cor: '#e74c3c' },
-    'Compras': { icon: 'fas fa-shopping-bag', cor: '#f39c12' },
-    'Serviços': { icon: 'fas fa-tools', cor: '#7f8c8d' },
-    'Impostos': { icon: 'fas fa-receipt', cor: '#d35400' },
-    'Doações': { icon: 'fas fa-hands-helping', cor: '#16a085' },
-    'Investimentos': { icon: 'fas fa-chart-line', cor: '#2ecc71' },
-    'Pets': { icon: 'fas fa-paw', cor: '#d35400' },
-    'Viagem': { icon: 'fas fa-plane', cor: '#3498db' }
-  };
+  constructor(private transacaoService: TransacaoService, private mesService: MesService, private alertaService: AlertService, private categoriaService: CategoriaService) { 
+    effect(() =>{
+      const count = this.transacaoService.transacaoAdicionada();
+      if(count > 0){
+        this.atualizarTransacoes();
+      }
+    })
+  }
+
+  categoriaIcones: { [key: string]: { icon: string; cor: string } } = {};
 
   tipoClasses: { [key: string]: string } = {
     'Receita': 'badge badge-receita',
@@ -41,52 +38,86 @@ export class TransacaoComponent implements OnInit {
   transacoes: Transacao[] = [];
   receitasMes: Transacao[] = [];
   despesasMes: Transacao[] = [];
-  categorias: string[] = Object.keys(this.categoriaIcones);
+  categorias: string[] = [];
   tipos: string[] = Object.keys(this.tipoClasses);
   tipoSelecionado: string = '';
   categoriaSelecionada: string = '';
   mesAtual = new Date().getMonth() + 1;
   itensPorPagina = 10;
   paginaAtual = 1;
-  meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+  meses: string[] = [];
+  observacaoTransacao: string = '';
 
-  constructor(private transacaoService: TransacaoService, private mesService: MesService) { }
+  
 
   ngOnInit(): void {
-    this.getTransacoesMes();
+    this.meses = this.mesService.getMeses();
+    this.categorias = this.categoriaService.getTodasCategorias();
+    this.categoriaIcones = this.categoriaService.getTodasComIcones();
+    this.getTransacoesFiltradas();
     this.getReceitasMes();
     this.getDespesasMes();
   }
 
   atualizarTransacoes() {
+    this.mesService.setMesAtual(this.mesAtual);
     this.transacoes = [];
     this.receitasMes = [];
     this.despesasMes = [];
-    this.getTransacoesMes();
+    this.getTransacoesFiltradas();
     this.getReceitasMes();
     this.getDespesasMes();
-    this.mesService.setMesAtual(this.mesAtual);
-  }
+  } 
 
-  //busca as transacoes no service passando o mes
-  getTransacoesMes() {
-    this.transacaoService.getTransacoesMes(this.mesAtual).forEach((transacao) => {
-      this.transacoes.push(transacao);
-    });
+  //busca as transacoes no filtro
+  getTransacoesFiltradas(){
+    this.transacaoService.getTransacoesFiltradas(this.categoriaSelecionada, this.mesAtual, this.tipoSelecionado).subscribe((transacoes)=>{
+      this.transacoes = transacoes;
+    })
   }
 
   //busca as transacoes que contem tipo de "Receita" no service passando o mes
   getReceitasMes() {
-    this.transacaoService.getReceitasMes(this.mesAtual).forEach((transacao) => {
-      this.receitasMes.push(transacao);
+    this.transacaoService.getReceitasFiltradas(this.categoriaSelecionada, this.mesAtual, this.tipoSelecionado).subscribe((transacoes) => {
+      this.receitasMes = transacoes;
     })
+    
   }
 
   //busca as transacoes que contem tipo de "Despesa" no service passando o mes
   getDespesasMes() {
-    this.transacaoService.getDespesasMes(this.mesAtual).forEach((transacao) => {
-      this.despesasMes.push(transacao);
+    this.transacaoService.getDespesasFiltradas(this.categoriaSelecionada, this.mesAtual, this.tipoSelecionado).subscribe((transacoes) =>{
+      this.despesasMes = transacoes;
     })
+  }
+
+  deleteTransacao(transacao: Transacao) {
+    if (!transacao._id) {
+      return console.log('Nenhuma transação encontrada');
+    }
+    
+    // Exibe o alerta de confirmação
+    this.alertaService.confirm({
+      title: 'Confirmar exclusão',
+      message: 'Tem certeza que deseja excluir esta transação? Esta ação não pode ser desfeita.',
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar'
+    }).then(confirmed => {
+      // Só prossegue com a exclusão se o usuário confirmou
+      if (confirmed && transacao._id) {
+        this.transacaoService.deleteTransacao(transacao._id).subscribe(() => {
+          this.alertaService.success('Transação removida com sucesso!');
+        });
+      }
+    });
+  }
+
+  //pega a observacao ao clicar
+  getObservacao(transacao: Transacao){
+    if(!transacao.observacao){
+      return
+    }
+    this.observacaoTransacao = transacao.observacao;
   }
 
   //busca quantas paginas serão necessárias na aba despesas

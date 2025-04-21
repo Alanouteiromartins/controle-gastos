@@ -11,13 +11,13 @@
                         <label class="form-label">Tipo de Transação</label>
                         <div class="d-flex">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="transactionType" id="receita" value="receita" checked>
+                                <input class="form-check-input" type="radio" [(ngModel)]="tipoTransacao" name="tipoTransacao" id="receita" value="Receita" checked>
                                 <label class="form-check-label" for="receita">
                                     <i class="fas fa-arrow-up text-success me-1"></i>Receita
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="transactionType" id="despesa" value="despesa">
+                                <input class="form-check-input" type="radio" [(ngModel)]="tipoTransacao" name="tipoTransacao" id="despesa" value="Despesa">
                                 <label class="form-check-label" for="despesa">
                                     <i class="fas fa-arrow-down text-danger me-1"></i>Despesa
                                 </label>
@@ -26,53 +26,38 @@
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição</label>
-                        <input type="text" class="form-control" id="description" placeholder="Ex: Salário, Aluguel, etc">
+                        <input type="text" class="form-control" name="descricao" [(ngModel)]="descricao" id="description" placeholder="Ex: Salário, Aluguel, etc">
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="amount" class="form-label">Valor (R$)</label>
                             <div class="input-group">
                                 <span class="input-group-text">R$</span>
-                                <input type="text" class="form-control" id="amount" placeholder="0,00">
+                                <input type="text" class="form-control" name="valor" [(ngModel)]="valor" id="amount" placeholder="0,00">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="date" class="form-label">Data</label>
-                            <input type="date" class="form-control" id="date" value="2025-04-13">
+                            <input type="date" class="form-control" name="data" [(ngModel)]="data" id="date" value="2025-04-13">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="category" class="form-label">Categoria</label>
-                            <select class="form-select" id="category">
-                                <option selected disabled>Selecione uma categoria</option>
-                                <optgroup label="Receitas">
-                                    <option>Salário</option>
-                                    <option>Investimentos</option>
-                                    <option>Presente</option>
-                                    <option>Outros (Receita)</option>
-                                </optgroup>
-                                <optgroup label="Despesas">
-                                    <option>Alimentação</option>
-                                    <option>Moradia</option>
-                                    <option>Transporte</option>
-                                    <option>Saúde</option>
-                                    <option>Lazer</option>
-                                    <option>Educação</option>
-                                    <option>Vestuário</option>
-                                    <option>Outros (Despesa)</option>
-                                </optgroup>
+                            <select class="form-select" id="category" name="categoria" [(ngModel)]="categoriaSelecionada">
+                                <option [ngValue]="''" selected>Selecione uma categoria</option>
+                                <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{categoria}}</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="frequency" class="form-label">Tipo</label>
                             <div class="d-flex">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="frequency" id="fixo" value="fixo" checked>
+                                    <input class="form-check-input" type="radio" [(ngModel)]="tipo" name="tipo" id="fixo" value="Fixo" checked>
                                     <label class="form-check-label" for="fixo">Fixo</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="frequency" id="variavel" value="variavel">
+                                    <input class="form-check-input" type="radio" [(ngModel)]="tipo" name="tipo" id="variavel" value="Variável">
                                     <label class="form-check-label" for="variavel">Variável</label>
                                 </div>
                             </div>
@@ -80,13 +65,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="notes" class="form-label">Observações (opcional)</label>
-                        <textarea class="form-control" id="notes" rows="2" placeholder="Adicione informações adicionais aqui..."></textarea>
+                        <textarea class="form-control" id="notes" rows="2" name="observacao" [(ngModel)]="observacao" placeholder="Adicione informações adicionais aqui..."></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Salvar Transação</button>
+                <button type="button" (click)="addTransacao()" class="btn btn-primary">Salvar Transação</button>
             </div>
         </div>
     </div>

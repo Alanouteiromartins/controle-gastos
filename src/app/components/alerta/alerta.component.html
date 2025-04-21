@@ -1,0 +1,28 @@
+<div *ngIf="visible" [@fadeInOut] class="alert-overlay" (click)="onOverlayClick($event)">
+    <div class="alert-container" [ngClass]="'alert-' + type" @zoomIn>
+      <div class="alert-icon">
+        <i *ngIf="type === 'success'" class="fa fa-check-circle pulse"></i>
+        <i *ngIf="type === 'error'" class="fa fa-times-circle shake"></i>
+        <i *ngIf="type === 'warning'" class="fa fa-exclamation-triangle pulse"></i>
+        <i *ngIf="type === 'info'" class="fa fa-info-circle"></i>
+      </div>
+      <div class="alert-content">
+        <h2 class="alert-title">{{ title }}</h2>
+        <p class="alert-message">{{ message }}</p>
+      </div>
+      <div class="alert-actions">
+        <button *ngIf="showConfirmButton" class="alert-button confirm" (click)="onConfirm()">
+          <i *ngIf="type === 'success'" class="fa fa-check"></i>
+          {{ confirmButtonText }}
+        </button>
+        <button *ngIf="showCancelButton" class="alert-button cancel" (click)="onCancel()">
+          <i class="fa fa-times"></i>
+          {{ cancelButtonText }}
+        </button>
+      </div>
+      <div *ngIf="timer > 0" class="alert-timer">
+        <div class="alert-timer-bar" [style.width.%]="timerProgress"></div>
+      </div>
+      <div *ngIf="showCloseButton" class="alert-close" (click)="onClose()">×</div>
+    </div>
+  </div>

@@ -1,0 +1,196 @@
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+  20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+.shake {
+  animation: shake 0.8s;
+}
+
+.alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+.alert-container {
+  background-color: #fff;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 30px 25px;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.alert-success {
+  border-left: 5px solid #2ecc71;
+}
+
+.alert-error {
+  border-left: 5px solid #e74c3c;
+}
+
+.alert-warning {
+  border-left: 5px solid #f39c12;
+}
+
+.alert-info {
+  border-left: 5px solid #3498db;
+}
+
+.alert-icon {
+  font-size: 56px;
+  margin-bottom: 20px;
+  transform-origin: center;
+}
+
+.alert-success .alert-icon {
+  color: #2ecc71;
+}
+
+.alert-error .alert-icon {
+  color: #e74c3c;
+}
+
+.alert-warning .alert-icon {
+  color: #f39c12;
+}
+
+.alert-info .alert-icon {
+  color: #3498db;
+}
+
+.alert-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+  letter-spacing: -0.3px;
+}
+
+.alert-message {
+  margin-bottom: 25px;
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.alert-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.alert-button {
+  padding: 10px 24px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 120px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.alert-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.alert-button.confirm {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.alert-button.confirm:hover {
+  background-color: #27ae60;
+}
+
+.alert-button.cancel {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.alert-button.cancel:hover {
+  background-color: #c0392b;
+}
+
+.alert-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #999;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.alert-close:hover {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.alert-timer {
+  height: 4px;
+  width: 100%;
+  background-color: #f1f1f1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.alert-timer-bar {
+  height: 100%;
+  transition: width 0.1s linear;
+}
+
+.alert-success .alert-timer-bar {
+  background-color: #2ecc71;
+}
+
+.alert-error .alert-timer-bar {
+  background-color: #e74c3c;
+}
+
+.alert-warning .alert-timer-bar {
+  background-color: #f39c12;
+}
+
+.alert-info .alert-timer-bar {
+  background-color: #3498db;
+}
