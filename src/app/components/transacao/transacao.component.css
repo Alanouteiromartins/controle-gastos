@@ -1,9 +1,9 @@
+/* Estilos existentes mantidos */
 .input-group-text {
     background-color: var(--secondary-color);
     color: white;
     border-color: var(--secondary-color);
 }
-
 
 .nav-link {
     color: var(--primary-color);
@@ -24,6 +24,8 @@
 
 .badge {
     margin: 3px;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
 }
 
 .badge-despesa {
@@ -59,6 +61,12 @@
     border: none;
     font-weight: 500;
     transition: all 0.3s ease;
+    width: 42px;
+    height: 38px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-search:hover {
@@ -85,12 +93,73 @@
 }
 
 .category-icon {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     color: white;
     margin-right: 5px;
+    font-size: 0.75rem;
+}
+
+/* Novos estilos para melhorar responsividade */
+@media (max-width: 767.98px) {
+    .table th, .table td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .category-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+    
+    .btn-sm {
+        padding: 0.15rem 0.4rem;
+        font-size: 0.75rem;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem !important;
+    }
+}
+
+/* Adiciona scroll horizontal para abas em telas pequenas */
+.nav-scroller {
+    position: relative;
+    z-index: 2;
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+    min-width: 100%;
+}
+
+/* Melhorias em espaçamentos */
+.row.g-3 {
+    --bs-gutter-y: 1rem;
+}
+
+/* Garante que botões de ação sejam alinhados corretamente */
+.btn-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Melhora visualização de paginação em mobile */
+@media (max-width: 575.98px) {
+    .pagination {
+        --bs-pagination-padding-x: 0.5rem;
+        --bs-pagination-padding-y: 0.25rem;
+    }
+    
 }

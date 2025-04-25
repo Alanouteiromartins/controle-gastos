@@ -22,7 +22,8 @@ export class CategoriaService {
     'Capacitação':        { icon: 'fas fa-chalkboard-teacher', cor: '#9b59b6' }, // Cursos, palestras
     'Eventos':            { icon: 'fas fa-calendar-alt', cor: '#3498db' },  // Congressos, workshops
     'Serviços Gerais':    { icon: 'fas fa-concierge-bell', cor: '#bdc3c7' }, // Limpeza, manutenção
-    'Doações':            { icon: 'fas fa-hands-helping', cor: '#1abc9c' }   // Ações sociais
+    'Doações':            { icon: 'fas fa-hands-helping', cor: '#1abc9c' },   // Ações sociais
+    'Outros':  { icon: 'fas fa-ellipsis-h', cor: '#95a5a6' } 
   };
   
 

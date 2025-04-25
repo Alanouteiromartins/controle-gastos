@@ -1,29 +1,29 @@
-<div class="row mb-4">
-    <div class="col-md-4 mb-3">
-        <div class="card h-100 header-card p-3">
-            <div class="card-body text-center">
-                <i class="fas fa-file-invoice-dollar summary-icon"></i>
-                <h6 class="card-subtitle mb-2 text-light">Saldo do Mês</h6>
-                <h3 class="card-title mb-0">{{saldoAtual | currency: 'BRL'}}</h3>
+<div class="row mb-5">
+    <div class="row g-4">
+        <!-- Card de Receitas -->
+        <div class="col-md-4">
+            <div class="summary-card income-card">
+                <div class="summary-card-header">
+                    <i class="fas fa-arrow-up up-icon"></i> Total de Receitas
+                </div>
+                <h3 class="summary-card-value income-value">{{valorReceitaMes | currency: 'BRL'}}</h3>
             </div>
         </div>
-    </div>
-    <div class="col-md-4 mb-3">
-        <div class="card h-100 header-card p-3">
-            <div class="card-body text-center">
-                <i class="fas fa-arrow-up summary-icon text-success"></i>
-                <h6 class="card-subtitle mb-2 text-light">Receitas do Mês</h6>
-                <h3 class="card-title mb-0">{{valorReceitaMes | currency:'BRL'}}</h3>
+        <div class="col-md-4">
+            <div class="summary-card expense-card">
+                <div class="summary-card-header">
+                    <i class="fas fa-arrow-down down-icon"></i> Total de Despesas
+                </div>
+                <h3 class="summary-card-value expense-value">{{valorDespesaMes | currency:'BRL'}}</h3>
             </div>
         </div>
-    </div>
-    <div class="col-md-4 mb-3">
-        <div class="card h-100 header-card p-3">
-            <div class="card-body text-center">
-                <i class="fas fa-arrow-down summary-icon text-danger"></i>
-                <h6 class="card-subtitle mb-2 text-light">Despesas do Mês</h6>
-                <h3 class="card-title mb-0">{{valorDespesaMes | currency:'BRL' }}</h3>
+
+        <div class="col-md-4">
+            <div class="summary-card balance-card">
+                <div class="summary-card-header">
+                    <i class="fas fa-dollar-sign balance-icon"></i> Saldo
+                </div>
+                <h3 class="summary-card-value balance-value">{{saldoAcumulado | currency:'BRL'}}</h3>
             </div>
         </div>
-    </div>
 </div>

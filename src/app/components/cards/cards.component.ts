@@ -17,6 +17,8 @@ export class CardsComponent implements OnInit {
   valorDespesaMes: number = 0;
   mesAtual = 0;
   saldoAtual: number = 0;
+  saldoAnterior: number = 0;
+  saldoAcumulado: number = 0;
 
   constructor(private transacaoService: TransacaoService, private mesService: MesService) { }
 
@@ -29,28 +31,24 @@ export class CardsComponent implements OnInit {
   }
 
   carregarDadosDoMes() {
+    const mesAnterior = this.mesAtual === 1 ? 12 : this.mesAtual - 1;
+  
     forkJoin({
       receitas: this.transacaoService.getReceitasMes(this.mesAtual),
-      despesas: this.transacaoService.getDespesasMes(this.mesAtual)
-    }).subscribe(({ receitas, despesas }) => {
+      despesas: this.transacaoService.getDespesasMes(this.mesAtual),
+      receitasAnteriores: this.transacaoService.getReceitasMes(mesAnterior),
+      despesasAnteriores: this.transacaoService.getDespesasMes(mesAnterior)
+    }).subscribe(({ receitas, despesas, receitasAnteriores, despesasAnteriores }) => {
       this.valorReceitaMes = receitas.reduce((total, t) => total + t.valor, 0);
       this.valorDespesaMes = despesas.reduce((total, t) => total + t.valor, 0);
       this.getSaldoAtual();
+  
+      const totalReceitaAnterior = receitasAnteriores.reduce((total, t) => total + t.valor, 0);
+      const totalDespesaAnterior = despesasAnteriores.reduce((total, t) => total + t.valor, 0);
+  
+      this.saldoAnterior = totalReceitaAnterior - totalDespesaAnterior;
+      this.saldoAcumulado = this.saldoAnterior + this.saldoAtual;
     });
-  }
-
-  getValorReceitaMes() {
-    this.transacaoService.getReceitasMes(this.mesAtual).subscribe((transacoesMes) =>{
-      const receitaTransacoes = transacoesMes;
-      this.valorReceitaMes = receitaTransacoes.reduce((total, transacao) => total + transacao.valor, 0);
-    })
-  }
-
-  getDespesasMes() {
-    this.transacaoService.getDespesasMes(this.mesAtual).subscribe((transacoes) =>{
-      const despesaTransacoes = transacoes;
-      this.valorDespesaMes = despesaTransacoes.reduce((total, transacao) => total + transacao.valor, 0);
-    })
   }
 
   getSaldoAtual() {

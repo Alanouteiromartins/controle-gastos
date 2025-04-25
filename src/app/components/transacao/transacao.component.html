@@ -1,375 +1,403 @@
 <!-- filtros -->
-<div class="card mb-4">
-    <div class="card-body">
-        <div class="row align-items-center">
-            <div class="col-md-3 mb-3 mb-md-0">
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                    <select class="form-select" [(ngModel)]="mesAtual">
-                        <option selected *ngFor="let mes of meses; let i = index" [ngValue]="i + 1">{{mes}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3 mb-md-0">
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                    <select class="form-select" [(ngModel)]="categoriaSelecionada">
-                        <option [ngValue]="''" selected>Todas as Categorias</option>
-                        <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{categoria}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3 mb-md-0">
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-filter"></i></span>
-                    <select class="form-select" [(ngModel)]="tipoSelecionado">
-                        <option [ngValue]="''" selected>Todos os Tipos</option>
-                        <option *ngFor="let tipo of tipos" [ngValue]="tipo">{{tipo}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3 d-flex align-items-center">
-                <button class="btn btn-search search-icon-only me-2" (click)="atualizarTransacoes()" title="Pesquisar">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-new flex-grow-1" data-bs-toggle="modal" data-bs-target="#newTransactionModal">
-                    <i class="fas fa-plus me-2"></i>Nova Transação
-                </button>
-            </div>
-        </div>
-    </div>
+<div class="card mb-5">
+  <div class="card-body">
+      <div class="row g-3">
+          <!-- Mês selector -->
+          <div class="col-12 col-sm-6 col-md-3">
+              <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                  <select class="form-select" [(ngModel)]="mesAtual">
+                      <option selected *ngFor="let mes of meses; let i = index" [ngValue]="i + 1">{{mes}}</option>
+                  </select>
+              </div>
+          </div>
+          <!-- Categoria selector -->
+          <div class="col-12 col-sm-6 col-md-3">
+              <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                  <select class="form-select" [(ngModel)]="categoriaSelecionada">
+                      <option [ngValue]="''" selected>Todas as Categorias</option>
+                      <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{categoria}}</option>
+                  </select>
+              </div>
+          </div>
+          <!-- Tipo selector -->
+          <div class="col-12 col-sm-6 col-md-3">
+              <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-filter"></i></span>
+                  <select class="form-select" [(ngModel)]="tipoSelecionado">
+                      <option [ngValue]="''" selected>Todos os Tipos</option>
+                      <option *ngFor="let tipo of tipos" [ngValue]="tipo">{{tipo}}</option>
+                  </select>
+              </div>
+          </div>
+          <!-- Botões -->
+          <div class="col-12 col-sm-6 col-md-3">
+              <div class="d-flex gap-2">
+                  <button class="btn btn-search" (click)="atualizarTransacoes()" title="Pesquisar">
+                      <i class="fas fa-search"></i>
+                  </button>
+                  <button class="btn btn-new flex-grow-1" data-bs-toggle="modal" data-bs-target="#newTransactionModal">
+                      <i class="fas fa-plus me-2 d-none d-sm-inline"></i>Nova
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 
 <!-- transacoes -->
 <div class="card">
-    <div class="card-body p-0">
-        <ul class="nav nav-tabs" id="transactionTabs">
-            <li class="nav-item">
-                <a class="nav-link active px-4 py-3" data-bs-toggle="tab" (click)="resetarPaginaAtual()" href="#allTransactions">Todas Transações</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link px-4 py-3" data-bs-toggle="tab" (click)="resetarPaginaAtual()" href="#income">Receitas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link px-4 py-3" data-bs-toggle="tab" (click)="resetarPaginaAtual()" href="#expenses">Despesas</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="allTransactions">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col">Data</th>
-                                <th scope="col">Descrição</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Valor</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let transacao of transacoesPaginadas">
-                                <td>{{transacao.data | date:'dd/MM/yyyy'}}</td>
-                                <td>{{transacao.descricao}}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <span class="category-icon"
-                                            [style.background-color]="categoriaIcones[transacao.categoria]?.cor">
-                                            <i [class]="categoriaIcones[transacao.categoria]?.icon"></i>
-                                        </span>
-                                        {{transacao.categoria}}
-                                    </div>
-                                </td>
-                                <td>
-                                    <ng-container *ngFor="let tipo of transacao.tipo">
-                                        <span [class]="tipoClasses[tipo]">{{tipo}}</span>
-                                    </ng-container>
-
-                                </td>
-                                <td class="fw-bold" [ngClass]="{
-                                    'text-success': transacao.tipo.includes('Receita'),
-                                    'text-danger': transacao.tipo.includes('Despesa')
-                                }">
-                                    {{transacao.valor |currency:'BRL'}}
-                                </td>
-                                <td>
-                                  <!-- <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button> -->
-                                  <button (click)="deleteTransacao(transacao)" class="btn btn-sm btn-outline-danger me-1"><i class="fas fa-trash"></i></button>
-                                  <button (click)="getObservacao(transacao)" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalObservacao" title="Visualizar observação da transação">
-                                    <i class="fas fa-info-circle"></i>
-                                  </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer bg-white py-3">
-                    <div class="row">
-                        <div class="col-6">
-                            <small class="text-muted">Mostrando {{transacoesPaginadas.length}} de {{transacoes.length}}
-                                transações</small>
-                        </div>
-                        <div class="col-6 text-end">
-                            <nav>
-                              <ul class="pagination pagination-sm mb-0 justify-content-end">
-                          
-                                <!-- Botão anterior -->
-                                <li class="page-item" [class.disabled]="paginaAtual === 1">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaTodas(paginaAtual - 1)">
-                                    <i class="fas fa-chevron-left"></i>
-                                  </a>
-                                </li>
-                          
-                                <!-- Páginas centrais -->
-                                <li class="page-item"
-                                    *ngFor="let pagina of paginasParaMostrarTodas"
-                                    [class.active]="paginaAtual === pagina">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaTodas(pagina)">
-                                    {{ pagina }}
-                                  </a>
-                                </li>
-                          
-                                <!-- Ellipsis depois -->
-                                <li class="page-item disabled" *ngIf="paginasParaMostrarTodas[paginasParaMostrarTodas.length - 1] < totalPaginasTodas - 1">
-                                  <span class="page-link">...</span>
-                                </li>
-                          
-                                <!-- Última página -->
-                                <li class="page-item" *ngIf="paginasParaMostrarTodas[paginasParaMostrarTodas.length - 1] < totalPaginasTodas">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaTodas(totalPaginasTodas)">
-                                    {{ totalPaginasTodas }}
-                                  </a>
-                                </li>
-                          
-                                <!-- Botão próximo -->
-                                <li class="page-item" [class.disabled]="paginaAtual === totalPaginasTodas">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaTodas(paginaAtual + 1)">
-                                    <i class="fas fa-chevron-right"></i>
-                                  </a>
-                                </li>
-                          
+  <div class="card-body p-0">
+      <div class="nav-scroller">
+          <ul class="nav nav-tabs flex-nowrap" id="transactionTabs">
+              <li class="nav-item">
+                  <a class="nav-link active px-3 py-3" data-bs-toggle="tab" (click)="resetarPaginaAtual()" href="#allTransactions">Todas</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link px-3 py-3" data-bs-toggle="tab" (click)="resetarPaginaAtual()" href="#income">Receitas</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link px-3 py-3" data-bs-toggle="tab" (click)="resetarPaginaAtual()" href="#expenses">Despesas</a>
+              </li>
+          </ul>
+      </div>
+      <div class="tab-content">
+          <!-- TODAS TRANSAÇÕES -->
+          <div class="tab-pane fade show active" id="allTransactions">
+              <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                      <thead class="table-light">
+                          <tr>
+                              <th>Data</th>
+                              <th>Descrição</th>
+                              <th class="d-none d-md-table-cell">Categoria</th>
+                              <th class="d-none d-md-table-cell">Tipo</th>
+                              <th>Valor</th>
+                              <th>Ações</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let transacao of transacoesPaginadas">
+                              <td>{{transacao.data | date:'dd/MM/yyyy'}}</td>
+                              <td>
+                                  {{transacao.descricao}}
+                                  <!-- Info mobile only -->
+                                  <div class="d-block d-md-none">
+                                      <small class="d-flex align-items-center mb-1">
+                                          <span class="category-icon me-1"
+                                              [style.background-color]="categoriaIcones[transacao.categoria]?.cor">
+                                              <i [class]="categoriaIcones[transacao.categoria]?.icon"></i>
+                                          </span>
+                                          {{transacao.categoria}}
+                                      </small>
+                                      <small>
+                                          <ng-container *ngFor="let tipo of transacao.tipo">
+                                              <span [class]="tipoClasses[tipo]">{{tipo}}</span>
+                                          </ng-container>
+                                      </small>
+                                  </div>
+                              </td>
+                              <!-- Desktop only columns -->
+                              <td class="d-none d-md-table-cell">
+                                  <div class="d-flex align-items-center">
+                                      <span class="category-icon"
+                                          [style.background-color]="categoriaIcones[transacao.categoria]?.cor">
+                                          <i [class]="categoriaIcones[transacao.categoria]?.icon"></i>
+                                      </span>
+                                      {{transacao.categoria}}
+                                  </div>
+                              </td>
+                              <td class="d-none d-md-table-cell">
+                                  <ng-container *ngFor="let tipo of transacao.tipo">
+                                      <span [class]="tipoClasses[tipo]">{{tipo}}</span>
+                                  </ng-container>
+                              </td>
+                              <td class="fw-bold" [ngClass]="{
+                                  'text-success': transacao.tipo.includes('Receita'),
+                                  'text-danger': transacao.tipo.includes('Despesa')
+                              }">
+                                  {{transacao.valor |currency:'BRL'}}
+                              </td>
+                              <td>
+                                  <div class="btn-group">
+                                      <button (click)="deleteTransacao(transacao)" class="btn btn-sm btn-outline-danger">
+                                          <i class="fas fa-trash"></i>
+                                      </button>
+                                      <button (click)="getObservacao(transacao)" class="btn btn-sm btn-outline-info" 
+                                          data-bs-toggle="modal" data-bs-target="#modalObservacao" 
+                                          title="Observação">
+                                          <i class="fas fa-info-circle"></i>
+                                      </button>
+                                  </div>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <!-- Paginação -->
+              <div class="card-footer bg-white py-3">
+                  <div class="row align-items-center">
+                      <div class="col-12 col-sm-6 mb-2 mb-sm-0 text-center text-sm-start">
+                          <small class="text-muted">Mostrando {{transacoesPaginadas.length}} de {{transacoes.length}} transações</small>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                          <nav>
+                              <ul class="pagination pagination-sm mb-0 justify-content-center justify-content-sm-end">
+                                  <!-- Anterior -->
+                                  <li class="page-item" [class.disabled]="paginaAtual === 1">
+                                      <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaTodas(paginaAtual - 1)">
+                                          <i class="fas fa-chevron-left"></i>
+                                      </a>
+                                  </li>
+                                  
+                                  <!-- Páginas (versão simplificada para mobile) -->
+                                  <li class="page-item d-none d-sm-block"
+                                      *ngFor="let pagina of paginasParaMostrarTodas"
+                                      [class.active]="paginaAtual === pagina">
+                                      <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaTodas(pagina)">
+                                          {{ pagina }}
+                                      </a>
+                                  </li>
+                                  
+                                  <!-- Indicador de página atual (só para mobile) -->
+                                  <li class="page-item d-sm-none">
+                                      <span class="page-link">{{paginaAtual}} / {{totalPaginasTodas}}</span>
+                                  </li>
+                                  
+                                  <!-- Próximo -->
+                                  <li class="page-item" [class.disabled]="paginaAtual === totalPaginasTodas">
+                                      <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaTodas(paginaAtual + 1)">
+                                          <i class="fas fa-chevron-right"></i>
+                                      </a>
+                                  </li>
                               </ul>
-                            </nav>
-                          </div>
-                          
-                    </div>
-                </div>
-            </div>
+                          </nav>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
-
-            <div class="tab-pane fade" id="income">
-                <!-- Receitas seriam mostradas aqui -->
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col">Data</th>
-                                <th scope="col">Descrição</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Valor</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let transacao of receitasPaginadas">
-                                <td>{{transacao.data | date: 'dd/MM/yyyy'}}</td>
-                                <td>{{transacao.descricao}}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <span class="category-icon"
-                                            [style.background-color]="categoriaIcones[transacao.categoria]?.cor">
-                                            <i [class]="categoriaIcones[transacao.categoria]?.icon"></i>
-                                        </span>
-                                        {{transacao.categoria}}
-                                    </div>
-                                </td>
-                                <td>
-                                    <ng-container *ngFor="let tipo of transacao.tipo">
-                                        <span [class]="tipoClasses[tipo]">{{tipo}}</span>
-                                    </ng-container>
-                                </td>
-                                <td class="text-success fw-bold">{{transacao.valor | currency:'BRL'}}</td>
-                                <td>
-                                    <!-- <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button> -->
-                                    <button (click)="deleteTransacao(transacao)" class="btn btn-sm btn-outline-danger me-1"><i class="fas fa-trash"></i></button>
-                                    <button (click)="getObservacao(transacao)" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Visualizar observação da transação">
-                                      <i class="fas fa-info-circle"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer bg-white py-3">
-                    <div class="row">
-                        <div class="col-6">
-                            <small class="text-muted">Mostrando {{receitasPaginadas.length}} de {{receitasMes.length}}
-                                transações</small>
-                        </div>
-                        <div class="col-6 text-end">
-                            <nav>
-                              <ul class="pagination pagination-sm mb-0 justify-content-end">
-                          
-                                <!-- Botão anterior -->
-                                <li class="page-item" [class.disabled]="paginaAtual === 1">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaReceitas(paginaAtual - 1)">
-                                    <i class="fas fa-chevron-left"></i>
-                                  </a>
-                                </li>
-                          
-                                <!-- Primeira página -->
-                                <li class="page-item" *ngIf="paginasParaMostrarReceitas[0] > 1">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaReceitas(1)">1</a>
-                                </li>
-                          
-                                <!-- Ellipsis antes -->
-                                <li class="page-item disabled" *ngIf="paginasParaMostrarReceitas[0] > 2">
-                                  <span class="page-link">...</span>
-                                </li>
-                          
-                                <!-- Páginas centrais -->
-                                <li class="page-item"
-                                    *ngFor="let pagina of paginasParaMostrarReceitas"
-                                    [class.active]="paginaAtual === pagina">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaReceitas(pagina)">
-                                    {{ pagina }}
-                                  </a>
-                                </li>
-                          
-                                <!-- Ellipsis depois -->
-                                <li class="page-item disabled" *ngIf="paginasParaMostrarReceitas[paginasParaMostrarReceitas.length - 1] < totalPaginasReceitas - 1">
-                                  <span class="page-link">...</span>
-                                </li>
-                          
-                                <!-- Última página -->
-                                <li class="page-item" *ngIf="paginasParaMostrarReceitas[paginasParaMostrarReceitas.length - 1] < totalPaginasReceitas">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaReceitas(totalPaginasReceitas)">
-                                    {{ totalPaginasReceitas }}
-                                  </a>
-                                </li>
-                          
-                                <!-- Botão próximo -->
-                                <li class="page-item" [class.disabled]="paginaAtual === totalPaginasReceitas">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaReceitas(paginaAtual + 1)">
-                                    <i class="fas fa-chevron-right"></i>
-                                  </a>
-                                </li>
+          <!-- RECEITAS -->
+          <div class="tab-pane fade" id="income">
+              <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                      <thead class="table-light">
+                          <tr>
+                              <th>Data</th>
+                              <th>Descrição</th>
+                              <th class="d-none d-md-table-cell">Categoria</th>
+                              <th class="d-none d-md-table-cell">Tipo</th>
+                              <th>Valor</th>
+                              <th>Ações</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let transacao of receitasPaginadas">
+                              <td>{{transacao.data | date: 'dd/MM/yyyy'}}</td>
+                              <td>
+                                  {{transacao.descricao}}
+                                  <!-- Info mobile only -->
+                                  <div class="d-block d-md-none">
+                                      <small class="d-flex align-items-center mb-1">
+                                          <span class="category-icon me-1"
+                                              [style.background-color]="categoriaIcones[transacao.categoria]?.cor">
+                                              <i [class]="categoriaIcones[transacao.categoria]?.icon"></i>
+                                          </span>
+                                          {{transacao.categoria}}
+                                      </small>
+                                      <small>
+                                          <ng-container *ngFor="let tipo of transacao.tipo">
+                                              <span [class]="tipoClasses[tipo]">{{tipo}}</span>
+                                          </ng-container>
+                                      </small>
+                                  </div>
+                              </td>
+                              <td class="d-none d-md-table-cell">
+                                  <div class="d-flex align-items-center">
+                                      <span class="category-icon"
+                                          [style.background-color]="categoriaIcones[transacao.categoria]?.cor">
+                                          <i [class]="categoriaIcones[transacao.categoria]?.icon"></i>
+                                      </span>
+                                      {{transacao.categoria}}
+                                  </div>
+                              </td>
+                              <td class="d-none d-md-table-cell">
+                                  <ng-container *ngFor="let tipo of transacao.tipo">
+                                      <span [class]="tipoClasses[tipo]">{{tipo}}</span>
+                                  </ng-container>
+                              </td>
+                              <td class="text-success fw-bold">{{transacao.valor | currency:'BRL'}}</td>
+                              <td>
+                                  <div class="btn-group">
+                                      <button (click)="deleteTransacao(transacao)" class="btn btn-sm btn-outline-danger">
+                                          <i class="fas fa-trash"></i>
+                                      </button>
+                                      <button (click)="getObservacao(transacao)" class="btn btn-sm btn-outline-info" 
+                                          data-bs-toggle="modal" data-bs-target="#modalObservacao"
+                                          title="Observação">
+                                          <i class="fas fa-info-circle"></i>
+                                      </button>
+                                  </div>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <!-- Paginação -->
+              <div class="card-footer bg-white py-3">
+                  <div class="row align-items-center">
+                      <div class="col-12 col-sm-6 mb-2 mb-sm-0 text-center text-sm-start">
+                          <small class="text-muted">Mostrando {{receitasPaginadas.length}} de {{receitasMes.length}} transações</small>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                          <nav>
+                              <ul class="pagination pagination-sm mb-0 justify-content-center justify-content-sm-end">
+                                  <!-- Anterior -->
+                                  <li class="page-item" [class.disabled]="paginaAtual === 1">
+                                      <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaReceitas(paginaAtual - 1)">
+                                          <i class="fas fa-chevron-left"></i>
+                                      </a>
+                                  </li>
+                                  
+                                  <!-- Páginas (versão desktop) -->
+                                  <li class="page-item d-none d-sm-block"
+                                      *ngFor="let pagina of paginasParaMostrarReceitas"
+                                      [class.active]="paginaAtual === pagina">
+                                      <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaReceitas(pagina)">
+                                          {{ pagina }}
+                                      </a>
+                                  </li>
+                                  
+                                  <!-- Indicador de página atual (só para mobile) -->
+                                  <li class="page-item d-sm-none">
+                                      <span class="page-link">{{paginaAtual}} / {{totalPaginasReceitas}}</span>
+                                  </li>
+                                  
+                                  <!-- Próximo -->
+                                  <li class="page-item" [class.disabled]="paginaAtual === totalPaginasReceitas">
+                                      <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaReceitas(paginaAtual + 1)">
+                                          <i class="fas fa-chevron-right"></i>
+                                      </a>
+                                  </li>
                               </ul>
-                            </nav>
-                          </div>               
-                    </div>
-                </div>
-            </div>
+                          </nav>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
-            <div class="tab-pane fade" id="expenses">
-                <!-- Despesas seriam mostradas aqui -->
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col">Data</th>
-                                <th scope="col">Descrição</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Valor</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let transacao of despesasPaginadas">
-                                <td>{{transacao.data | date: 'dd/MM/yyyy'}}</td>
-                                <td>{{transacao.descricao}}</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <span class="category-icon"
-                                            [style.background-color]="categoriaIcones[transacao.categoria]?.cor">
-                                            <i [class]="categoriaIcones[transacao.categoria]?.icon"></i>
-                                        </span>
-                                        {{transacao.categoria}}
-                                    </div>
-                                </td>
-                                <td>
-                                    <ng-container *ngFor="let tipo of transacao.tipo">
-                                        <span [class]="tipoClasses[tipo]">{{tipo}}</span>
-                                    </ng-container>
-                                </td>
-                                <td class="text-danger fw-bold">{{transacao.valor | currency: 'BRL'}}</td>
-                                <td>
-                                  <!-- <button class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></button> -->
-                                  <button (click)="deleteTransacao(transacao)" class="btn btn-sm btn-outline-danger me-1"><i class="fas fa-trash"></i></button>
-                                  <button (click)="getObservacao(transacao)" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Visualizar observação da transação">
-                                    <i class="fas fa-info-circle"></i>
-                                  </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer bg-white py-3">
-                    <div class="row">
-                        <div class="col-6">
-                            <small class="text-muted">Mostrando {{despesasPaginadas.length}} de {{despesasMes.length}}
-                                transações</small>
-                        </div>
-                        <div class="col-6 text-end">
-                            <nav>
-                              <ul class="pagination pagination-sm mb-0 justify-content-end">
-                          
-                                <!-- Botão anterior -->
-                                <li class="page-item" [class.disabled]="paginaAtual === 1">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaDespesas(paginaAtual - 1)">
-                                    <i class="fas fa-chevron-left"></i>
-                                  </a>
-                                </li>
-                          
-                                <!-- Primeira página -->
-                                <li class="page-item" *ngIf="paginasParaMostrarDespesas[0] > 1">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaDespesas(1)">1</a>
-                                </li>
-                          
-                                <!-- Ellipsis antes -->
-                                <li class="page-item disabled" *ngIf="paginasParaMostrarDespesas[0] > 2">
-                                  <span class="page-link">...</span>
-                                </li>
-                          
-                                <!-- Páginas centrais -->
-                                <li class="page-item"
-                                    *ngFor="let pagina of paginasParaMostrarDespesas"
-                                    [class.active]="paginaAtual === pagina">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaDespesas(pagina)">
-                                    {{ pagina }}
-                                  </a>
-                                </li>
-                          
-                                <!-- Ellipsis depois -->
-                                <li class="page-item disabled" *ngIf="paginasParaMostrarDespesas[paginasParaMostrarDespesas.length - 1] < totalPaginasDespesas - 1">
-                                  <span class="page-link">...</span>
-                                </li>
-                          
-                                <!-- Última página -->
-                                <li class="page-item" *ngIf="paginasParaMostrarDespesas[paginasParaMostrarDespesas.length - 1] < totalPaginasDespesas">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaDespesas(totalPaginasDespesas)">
-                                    {{ totalPaginasDespesas }}
-                                  </a>
-                                </li>
-                          
-                                <!-- Botão próximo -->
-                                <li class="page-item" [class.disabled]="paginaAtual === totalPaginasDespesas">
-                                  <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaDespesas(paginaAtual + 1)">
-                                    <i class="fas fa-chevron-right"></i>
-                                  </a>
-                                </li>
+          <!-- DESPESAS -->
+          <div class="tab-pane fade" id="expenses">
+              <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                      <thead class="table-light">
+                          <tr>
+                              <th>Data</th>
+                              <th>Descrição</th>
+                              <th class="d-none d-md-table-cell">Categoria</th>
+                              <th class="d-none d-md-table-cell">Tipo</th>
+                              <th>Valor</th>
+                              <th>Ações</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let transacao of despesasPaginadas">
+                              <td>{{transacao.data | date: 'dd/MM/yyyy'}}</td>
+                              <td>
+                                  {{transacao.descricao}}
+                                  <!-- Info mobile only -->
+                                  <div class="d-block d-md-none">
+                                      <small class="d-flex align-items-center mb-1">
+                                          <span class="category-icon me-1"
+                                              [style.background-color]="categoriaIcones[transacao.categoria]?.cor">
+                                              <i [class]="categoriaIcones[transacao.categoria]?.icon"></i>
+                                          </span>
+                                          {{transacao.categoria}}
+                                      </small>
+                                      <small>
+                                          <ng-container *ngFor="let tipo of transacao.tipo">
+                                              <span [class]="tipoClasses[tipo]">{{tipo}}</span>
+                                          </ng-container>
+                                      </small>
+                                  </div>
+                              </td>
+                              <td class="d-none d-md-table-cell">
+                                  <div class="d-flex align-items-center">
+                                      <span class="category-icon"
+                                          [style.background-color]="categoriaIcones[transacao.categoria]?.cor">
+                                          <i [class]="categoriaIcones[transacao.categoria]?.icon"></i>
+                                      </span>
+                                      {{transacao.categoria}}
+                                  </div>
+                              </td>
+                              <td class="d-none d-md-table-cell">
+                                  <ng-container *ngFor="let tipo of transacao.tipo">
+                                      <span [class]="tipoClasses[tipo]">{{tipo}}</span>
+                                  </ng-container>
+                              </td>
+                              <td class="text-danger fw-bold">{{transacao.valor | currency: 'BRL'}}</td>
+                              <td>
+                                  <div class="btn-group">
+                                      <button (click)="deleteTransacao(transacao)" class="btn btn-sm btn-outline-danger">
+                                          <i class="fas fa-trash"></i>
+                                      </button>
+                                      <button (click)="getObservacao(transacao)" class="btn btn-sm btn-outline-info" 
+                                          data-bs-toggle="modal" data-bs-target="#modalObservacao"
+                                          title="Observação">
+                                          <i class="fas fa-info-circle"></i>
+                                      </button>
+                                  </div>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <!-- Paginação -->
+              <div class="card-footer bg-white py-3">
+                  <div class="row align-items-center">
+                      <div class="col-12 col-sm-6 mb-2 mb-sm-0 text-center text-sm-start">
+                          <small class="text-muted">Mostrando {{despesasPaginadas.length}} de {{despesasMes.length}} transações</small>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                          <nav>
+                              <ul class="pagination pagination-sm mb-0 justify-content-center justify-content-sm-end">
+                                  <!-- Anterior -->
+                                  <li class="page-item" [class.disabled]="paginaAtual === 1">
+                                      <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaDespesas(paginaAtual - 1)">
+                                          <i class="fas fa-chevron-left"></i>
+                                      </a>
+                                  </li>
+                                  
+                                  <!-- Páginas (versão desktop) -->
+                                  <li class="page-item d-none d-sm-block"
+                                      *ngFor="let pagina of paginasParaMostrarDespesas"
+                                      [class.active]="paginaAtual === pagina">
+                                      <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaDespesas(pagina)">
+                                          {{ pagina }}
+                                      </a>
+                                  </li>
+                                  
+                                  <!-- Indicador de página atual (só para mobile) -->
+                                  <li class="page-item d-sm-none">
+                                      <span class="page-link">{{paginaAtual}} / {{totalPaginasDespesas}}</span>
+                                  </li>
+                                  
+                                  <!-- Próximo -->
+                                  <li class="page-item" [class.disabled]="paginaAtual === totalPaginasDespesas">
+                                      <a class="page-link" style="cursor: pointer;" (click)="mudarPaginaDespesas(paginaAtual + 1)">
+                                          <i class="fas fa-chevron-right"></i>
+                                      </a>
+                                  </li>
                               </ul>
-                            </nav>
-                          </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+                          </nav>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
+
 
 <app-modal-observacao [observacao]="observacaoTransacao"></app-modal-observacao>
